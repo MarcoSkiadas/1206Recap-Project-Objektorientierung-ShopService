@@ -27,5 +27,13 @@ public class ShopService {
                 .distinct()
                 .toList();
     }
+    public Order updateOrder(String orderId, OrderStatus orderStatus) throws Exception{
+        Order order = orderRepo.getOrderById(orderId);
+        if (order == null) {
+            throw new Exception("Order mit Id: " + orderId + " existiert nicht!");
+        }
+        Order newOrder = order.withStatus(orderStatus);
+        return orderRepo.addOrder(newOrder);
+    }
 
 }
